@@ -42,6 +42,7 @@ class TreeThings {
 
         slider.addEventListener("input", {
             angle = slider.value.toDouble()
+
         })
 
         window.requestAnimationFrame {
