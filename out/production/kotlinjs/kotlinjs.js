@@ -4,18 +4,36 @@ if (typeof kotlin === 'undefined') {
 var kotlinjs = function (_, Kotlin) {
   'use strict';
   var Unit = Kotlin.kotlin.Unit;
-  var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
-  var numberToInt = Kotlin.numberToInt;
-  var Kind_CLASS = Kotlin.Kind.CLASS;
   var throwCCE = Kotlin.throwCCE;
-  function TreeThings(canvas, ctx, slider) {
-    this.ctx_0 = ctx;
-    this.angle = toDouble(slider.value);
+  var numberToInt = Kotlin.numberToInt;
+  var toDouble = Kotlin.kotlin.text.toDouble_pdl1vz$;
+  var Kind_CLASS = Kotlin.Kind.CLASS;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var equals = Kotlin.equals;
+  function TreeThings() {
+    this.canvas = null;
+    this.slider = null;
+    this.ctx = null;
+    this.angle = 0;
     this.width = 1000.0;
     this.height = 1000.0;
-    canvas.height = numberToInt(this.height);
-    canvas.width = numberToInt(this.width);
-    slider.addEventListener('input', TreeThings_init$lambda(slider, this));
+    var tmp$, tmp$_0, tmp$_1, tmp$_2;
+    var container = Kotlin.isType(tmp$ = document.getElementById('the_container'), HTMLDivElement) ? tmp$ : throwCCE();
+    this.canvas = Kotlin.isType(tmp$_0 = document.createElement('canvas'), HTMLCanvasElement) ? tmp$_0 : throwCCE();
+    this.canvas.id = 'the_canvas';
+    this.canvas.height = numberToInt(this.height);
+    this.canvas.width = numberToInt(this.width);
+    this.slider = Kotlin.isType(tmp$_1 = document.createElement('input'), HTMLInputElement) ? tmp$_1 : throwCCE();
+    this.slider.type = 'range';
+    this.slider.min = '0';
+    this.slider.max = '6.283185307179586';
+    this.slider.value = '5.55';
+    this.slider.step = '0.01';
+    container.append(this.canvas);
+    container.append(this.slider);
+    this.ctx = Kotlin.isType(tmp$_2 = this.canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_2 : throwCCE();
+    this.angle = toDouble(this.slider.value);
+    this.slider.addEventListener('input', TreeThings_init$lambda(this));
     window.requestAnimationFrame(TreeThings_init$lambda_0(this));
   }
   var Math_0 = Math;
@@ -26,11 +44,11 @@ var kotlinjs = function (_, Kotlin) {
     var tmp$_1 = start[1];
     var x_0 = this.angle * depth;
     var end = [tmp$_0, tmp$_1 + len * Math_0.sin(x_0)];
-    this.ctx_0.beginPath();
-    this.ctx_0.strokeStyle = 'black';
-    this.ctx_0.moveTo(start[0], start[1]);
-    this.ctx_0.lineTo(end[0], end[1]);
-    this.ctx_0.stroke();
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = 'black';
+    this.ctx.moveTo(start[0], start[1]);
+    this.ctx.lineTo(end[0], end[1]);
+    this.ctx.stroke();
     if (len > 4) {
       this.branch_3l1b2k$(end, len * 0.67, depth + 1 | 0);
       this.branch_3l1b2k$(end, len * 0.67, depth - 1 | 0);
@@ -43,23 +61,23 @@ var kotlinjs = function (_, Kotlin) {
     };
   }
   TreeThings.prototype.draw = function () {
-    this.ctx_0.fillStyle = 'white';
-    this.ctx_0.clearRect(0.0, 0.0, this.width, this.height);
+    this.ctx.fillStyle = 'white';
+    this.ctx.clearRect(0.0, 0.0, this.width, this.height);
     var len = 300.0;
     var start = [0.0, this.height / 2];
     var end = [start[0] + len, start[1]];
-    this.ctx_0.beginPath();
-    this.ctx_0.strokeStyle = 'black';
-    this.ctx_0.moveTo(start[0], start[1]);
-    this.ctx_0.lineTo(end[0], end[1]);
-    this.ctx_0.stroke();
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = 'black';
+    this.ctx.moveTo(start[0], start[1]);
+    this.ctx.lineTo(end[0], end[1]);
+    this.ctx.stroke();
     this.branch_3l1b2k$(end, len * 0.67, 1);
     this.branch_3l1b2k$(end, len * 0.67, -1);
     window.requestAnimationFrame(TreeThings$draw$lambda(this));
   };
-  function TreeThings_init$lambda(closure$slider, this$TreeThings) {
+  function TreeThings_init$lambda(this$TreeThings) {
     return function (it) {
-      this$TreeThings.angle = toDouble(closure$slider.value);
+      this$TreeThings.angle = toDouble(this$TreeThings.slider.value);
       return Unit;
     };
   }
@@ -75,13 +93,14 @@ var kotlinjs = function (_, Kotlin) {
     interfaces: []
   };
   function main(args) {
-    var tmp$, tmp$_0, tmp$_1;
-    var canvas = Kotlin.isType(tmp$ = document.getElementById('the_canvas'), HTMLCanvasElement) ? tmp$ : throwCCE();
-    var ctx = Kotlin.isType(tmp$_0 = canvas.getContext('2d'), CanvasRenderingContext2D) ? tmp$_0 : throwCCE();
-    var slider = Kotlin.isType(tmp$_1 = document.getElementById('range_slider'), HTMLInputElement) ? tmp$_1 : throwCCE();
-    new TreeThings(canvas, ctx, slider);
+    if (equals(window.location.hash, '#fractal_tree'))
+      println('fractal tree');
+    else {
+      new TreeThings();
+    }
   }
-  _.TreeThings = TreeThings;
+  var package$FractalTree = _.FractalTree || (_.FractalTree = {});
+  package$FractalTree.TreeThings = TreeThings;
   _.main_kand9s$ = main;
   main([]);
   Kotlin.defineModule('kotlinjs', _);
