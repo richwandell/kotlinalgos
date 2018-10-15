@@ -1,2 +1,2 @@
 ## Fractal Tree
-https://richwandell.github.io/kotlintree/
+https://richwandell.github.io/kotlinalgos/
